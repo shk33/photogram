@@ -1,0 +1,11 @@
+.posts-wrapper.row
+  .post
+    .post-head
+      .name
+        Ben Walker
+    .image.center-block
+      =link_to (image_tag @post.image.url(:medium), class:'img-responsive'), post_path(@post)
+    %p.caption
+      =@post.caption
+    .text-center
+      =link_to "Back", posts_path
