@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   root 'posts#index'
+  devise_for :users
   resources :posts
 
 end
