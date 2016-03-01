@@ -29,6 +29,9 @@ gem "haml-rails", "~> 0.9"
 # Use Paperclip for file atachment
 gem "paperclip", "~> 4.3"
 
+# DSL for building forms
+gem 'simple_form'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
