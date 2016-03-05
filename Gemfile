@@ -38,6 +38,9 @@ gem 'bootstrap-sass', '~> 3.3.6'
 # Devise for user auth
 gem 'devise'
 
+# For Pagination Purposes
+gem 'kaminari', '~> 0.16.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
