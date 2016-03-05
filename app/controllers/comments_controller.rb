@@ -7,12 +7,15 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      flash[:success] = "You commented the hell out of that post!"
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js 
+      end
     else
       flash[:alert] = "Check the comment form, something went horribly wrong."
+      render root_path
     end
 
-    redirect_to :back
   end
 
   def destroy
