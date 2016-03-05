@@ -10,40 +10,75 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require_tree .
+ *= require_self
  */
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
- body {
-  background-color: #fafafa;
-  font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica,
-  sans-serif;
+html {
+  height: 100%;
 }
+
+body {
+  height: 100%;
+  background-color: #fafafa;
+  font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.alert {
+  margin-bottom: 0px;
+}
+
+.error_notification{
+  margin-bottom: 0px;
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.error{
+  display:block;
+  color: #a94442;
+}
+
 /* ## NAVBAR CUSTOMISATIONS ## */
+
+.navbar {
+  margin-bottom: 0px;
+}
+
 .navbar-brand {
   a {
     color: #125688;
   }
 }
+
 .navbar-default {
   background-color: #fff;
-  height: 54px;
   .navbar-nav li a {
     color: #125688;
   }
 }
+
 .navbar-container {
-  width: 70%;
+  max-width: 640px;
   margin: 0 auto;
 }
+
 /* ## POST CUSTOMISATIONS ## */
+
 .posts-wrapper {
   padding-top: 40px;
   margin: 0 auto;
   max-width: 642px;
   width: 100%;
 }
+
 .post {
   background-color: #fff;
   border-color: #edeeee;
@@ -76,6 +111,7 @@
     border-top: 1px solid #eeefef;
   }
 }
+
 .post-bottom {
   .user-name, .comment-content {
     display: inline;
@@ -85,7 +121,6 @@
   }
   .user-name {
     font-weight: 500;
-    margin-right: 0.3em;
     color: #125688;
     font-size: 15px;
   }
@@ -104,13 +139,13 @@
     }
   }
   margin-bottom: 7px;
-  padding-top: 24px;
   padding-left: 24px;
   padding-right: 24px;
   padding-bottom: 10px;
   font-size: 15px;
   line-height: 18px;
 }
+
 .comment_content {
   font-size: 15px;
   line-height: 18px;
@@ -118,6 +153,7 @@
   width: 100%;
   color: #4B4F54;
 }
+
 .comment-like-form {
   padding-top: 24px;
   margin-top: 13px;
@@ -129,16 +165,169 @@
   flex-direction: row;
   justify-content: center;
 }
-/* ## Wrapper and styling for the new and edit views ## */
-.form-wrapper {
-  width: 60%;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 40px;
-  border: 1px solid #eeefef;
-  border-radius: 3px;
-}
+
+/* ## Wrapper and styling for the new, edit & devise views ## */
+
 .edit-links {
   margin-top: 20px;
   margin-bottom: 40px;
+}
+
+.registration-bg {
+  padding-top: 4em;
+  height: 100%;
+  background-image: image-url('bg1.jpg');
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-bg {
+  padding-top: 4em;
+  height: 100%;
+  background-image: image-url('bg2.jpg');
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.log-in{
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+  border: none;
+}
+
+.panel {
+  border-radius: 8px;
+}
+
+.panel-heading{
+  h1 {
+    text-align: center;
+  }
+}
+
+#image-preview {
+  margin: 0 auto;
+}
+
+#post_image {
+  padding: 1em;
+  margin: 0px auto;
+}
+
+
+#paginator {
+  color: #4090DB;
+  height: 120px;
+  width: 120px;
+  margin: 60px auto 40px;
+  position: relative;
+  display: table;
+  border: 2px solid #4090DB;
+  border-radius: 50%;
+  :hover {
+    border: 1px solid #2D6DA8;
+    border-radius: 50%;
+  }
+}
+
+#load_more {
+  display: table-cell;
+  font-size: 12px;
+  padding: 0px 9px;
+  vertical-align: middle;
+  text-decoration: none;
+  a :hover {
+    color: #2D6DA8;
+  }
+}
+
+.comments {
+  .paginator {
+    margin: 0.5em;
+    .more-comments {
+      color: #A5A7AA;
+    }
+  }
+}
+
+.comment-submit-button {
+  position: absolute;
+  left: -9999px;
+}
+
+.profile-header {
+  padding: 20px 0;
+}
+
+.profile-image {
+  margin: 20px auto;
+  height: 152px;
+  width: 152px;
+}
+
+.user-name-and-follow {
+  display: inline;
+}
+
+.profile-user-name {
+  display: inline;
+}
+
+.edit-button {
+  border-color: #818488;
+  color: #818488;
+  margin-left: 20px;
+}
+
+.profile-bio {
+  margin-top: 20px;
+}
+
+#user_bio {
+  border: 1px solid gray;
+}
+
+#user_avatar {
+  padding: 1em;
+  margin: 0px auto;
+}
+
+.likes {
+  margin-top: 20px;
+  margin-bottom: 7px;
+  color: #4b4f54;
+}
+
+.like {
+  text-decoration: none;
+  color: red;
+}
+
+.like-button a:hover, a:focus {
+  text-decoration: none;
+  color: red;
+}
+
+// NOTIFICATIONS
+
+.notification-dropdown {
+  margin-top: 10px;
+  button {
+    border: none;
+  }
+}
+
+.notification-index-list {
+  margin-top: 5em;
+  list-style: none;
+  li {
+    margin-top: 1em;
+    background-color: white;
+    padding: 1em;
+  }
 }
