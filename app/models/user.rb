@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
 
   # Relationships
   has_many :posts, dependent: :destroy
+
+  def owns_post? post
+    post.user.id == id
+  end
+
 end
