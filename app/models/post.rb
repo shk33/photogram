@@ -9,5 +9,6 @@ class Post < ActiveRecord::Base
 
   #Relationships
   belongs_to :user
-
+  has_many :comments, dependent: :destroy
+  
 end

@@ -53,8 +53,16 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  # Devise Routes
   devise_for :users, :controllers => { registrations: 'registrations' }
+
+  # Root Route
   root 'posts#index'
-  resources :posts
+
+  # Posts and their comments
+  resources :posts do
+    resources :comments
+  end
 
 end

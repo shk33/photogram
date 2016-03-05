@@ -8,10 +8,14 @@ class User < ActiveRecord::Base
   validates :user_name, presence: true, length: { minimum: 4, maximum: 16 }
 
   # Relationships
-  has_many :posts, dependent: :destroy
+  has_many :posts,    dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def owns_post? post
     post.user.id == id
   end
 
+  def owns_comment? post
+    post.user.id == id
+  end
 end
