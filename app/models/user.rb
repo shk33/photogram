@@ -6,4 +6,7 @@ class User < ActiveRecord::Base
 
   # Model Validations
   validates :user_name, presence: true, length: { minimum: 4, maximum: 16 }
+
+  # Relationships
+  has_many :posts, dependent: :destroy
 end
