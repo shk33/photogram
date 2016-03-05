@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
     validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
 
-  #Relationnships
+  #Relationships
   belongs_to :user
 
 end
