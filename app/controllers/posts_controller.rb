@@ -4,15 +4,15 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = Post.all
+    @posts = Post.order created_at: :desc
   end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def create
-    @post = Post.new post_params
+    @post = current_user.posts.build post_params
 
     if @post.save
       flash[:success] = "Your post has been created!"
