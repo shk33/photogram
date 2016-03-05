@@ -4,5 +4,5 @@
   .comment-content
     = comment.content
   - if current_user.owns_comment? comment
-    = link_to post_comment_path(post, comment), method: :delete,data: { confirm: "Are you sure?" } do
+    = link_to post_comment_path(post, comment), remote: true, method: :delete,data: { confirm: "Are you sure?" } do
       %span(class="glyphicon glyphicon-remove delete-comment")

@@ -17,8 +17,8 @@
           = post.caption
 
         .comments{id: "comments_#{post.id}"}
-        - if post.comments
-          = render post.comments, post: post
+          - if post.comments
+            = render post.comments, post: post
     
     .comment-like-form.row
       .like-button.col-sm-1

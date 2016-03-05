@@ -19,9 +19,13 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
-    flash[:success] = "Comment deleted :("
-    redirect_to :back
+    if current_user.owns_comment? @comment
+      @comment.destroy
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js 
+      end
+    end
   end
 
   private
@@ -34,6 +38,6 @@ class CommentsController < ApplicationController
     end
 
     def set_comment
-      @comment = Comment.find params[:id]
+      @comment = @post.comments.find params[:id]
     end
 end
