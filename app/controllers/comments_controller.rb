@@ -1,6 +1,14 @@
 class CommentsController < ApplicationController
-  before_action :set_post
+  before_action :set_post, only: [:index,:create, :destroy]
   before_action :set_comment, only: [:destroy]
+
+  def index
+    @comments = @post.comments.order("created_at ASC")
+
+    respond_to do |format|
+      format.html { render layout: !request.xhr? }
+    end
+  end
 
   def create
     @comment = @post.comments.build(comment_params)
