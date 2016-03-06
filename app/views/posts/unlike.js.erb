@@ -1,0 +1,12 @@
+var likeButton =  $("#unlike_<%= @post.id %>")
+var parent = likeButton.parent();
+
+// Remove unlike Button
+likeButton.remove();
+
+// Add Like Button
+parent.append("<%= j (render partial: 'posts/like_button', locals: { post: @post} ) %>")
+
+// Render Likes
+$("#likes_<%= @post.id %>")
+  .html("<%= j (render partial: 'posts/likes', locals: { post: @post} ) %>");

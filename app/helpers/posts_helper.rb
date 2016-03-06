@@ -7,8 +7,11 @@ module PostsHelper
   end
 
   def liked_post post
-    return 'glyphicon-heart' if current_user.voted_for? post
-    'glyphicon-heart-empty'
+    if current_user.voted_for? post
+      render 'posts/unlike_button', post: post
+    else
+      render 'posts/like_button', post: post
+    end
   end
 
   private

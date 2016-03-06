@@ -1,6 +1,12 @@
-$("#like_<%= @post.id %>")
-  .removeClass('glyphicon-heart-empty')
-  .addClass('glyphicon-heart');
+var unlikeButton =  $("#like_<%= @post.id %>")
+var parent = unlikeButton.parent();
 
+// Remove unlike Button
+unlikeButton.remove();
+
+// Add Like Button
+parent.append("<%= j (render partial: 'posts/unlike_button', locals: { post: @post} ) %>")
+
+// Render Likes
 $("#likes_<%= @post.id %>")
   .html("<%= j (render partial: 'posts/likes', locals: { post: @post} ) %>");
