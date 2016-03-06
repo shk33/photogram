@@ -42,6 +42,9 @@ gem 'devise'
 # For Pagination Purposes
 gem 'kaminari', '~> 0.16.3'
 
+# Liking and/or Voting models
+gem 'acts_as_votable', '~> 0.10.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
