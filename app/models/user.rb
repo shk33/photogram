@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: '152x152#' }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
+  # Because User can like posts
+  acts_as_voter
+
   def owns_post? post
     post.user.id == id
   end
