@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'profiles/show'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -63,6 +65,13 @@ Rails.application.routes.draw do
   # Posts and their comments
   resources :posts do
     resources :comments
+    member do
+      get 'like'      
+    end
   end
 
+  #Profiles
+  get   ':user_name',      to: 'profiles#show',   as: :profile
+  get   ':user_name/edit', to: 'profiles#edit',   as: :edit_profile
+  patch ':user_name/edit', to: 'profiles#update', as: :update_profile
 end
