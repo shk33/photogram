@@ -9,7 +9,8 @@ class Post < ActiveRecord::Base
   #Relationships
   belongs_to :user
   has_many :comments, dependent: :destroy
-
+  has_many :notifications, dependent: :destroy
+  
   # For Liking Posts
   acts_as_votable
   

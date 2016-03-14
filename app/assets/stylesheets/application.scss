@@ -27,6 +27,23 @@ body {
   font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
+.notification-index-list {
+  margin-top: 5em;
+  list-style: none;
+  li {
+    margin-top: 1em;
+    background-color: white;
+    padding: 1em;
+  }
+}
+
+.notification-dropdown {
+  margin-top: 10px;
+  button {
+    border: none;
+  }
+}
+
 .alert {
   margin-bottom: 0px;
 }
