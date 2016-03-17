@@ -9,7 +9,7 @@ An Instagram clone app built in Rails 4.2.4
 * Main feed only showing photos of followed users
 * Browse feature to view all posts made in Photogram
 
-## Instalation
+## Installation
 * Clone Repository
 ``` 
   git clone https://github.com/shk33/photogram.git
