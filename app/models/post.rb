@@ -13,5 +13,8 @@ class Post < ActiveRecord::Base
   
   # For Liking Posts
   acts_as_votable
+
+  # Scopes
+  scope :of_followed_users, -> (following_users) { where user_id: following_users }
   
 end
