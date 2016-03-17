@@ -13,6 +13,8 @@
             %li
               = render 'notifications/notification_dropdown'
             %li
+              = link_to "Explore all Posts", browse_posts_path
+            %li
               = link_to "New Post", new_post_path
             %li
               = link_to "Logout (#{current_user.user_name})", destroy_user_session_path, method: :delete

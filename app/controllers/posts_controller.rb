@@ -4,6 +4,14 @@ class PostsController < ApplicationController
   before_action :owned_post, only:[:edit, :update, :destroy]
   before_action :authenticate_user!
 
+  def  browse
+    @posts = Post.all.order(created_at: :desc).page params[:page]
+    respond_to do |format|
+      format.html
+      format.js 
+    end
+  end
+
   def index
     @posts = Post.of_followed_users(current_user.following).order(created_at: :desc).page params[:page]
     respond_to do |format|
