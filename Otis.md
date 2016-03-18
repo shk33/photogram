@@ -1,5 +1,44 @@
-# Documentación del Programa
+# Reporte de Programa: Sumador con display
 
+<br>
+<br>
+<br>
+### Asignatura: Arquitectura de Computadoras
+### Profesor: Otilio Santos Aguilar
+### Alumno: Miguel Eduardo Coronel Segovia
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Propósito del Programa
+Leer un número del puerto A entre el 0 y 7, luego sumarle dos y por último desplegar el resultado en un display de 7 segmentos conectado al puerto B.
+
+## Tabla de Entradas y Salidas
+| Entrada (A<sub>2</sub>, A<sub>1</sub>, A<sub>0</sub>)      | Salida(Hex)        | Salida (B<sub>7</sub>, B<sub>6</sub>, ... B<sub>1</sub>,B<sub>0</sub>) |
+| ------------- |:-------------:|:-------------:|
+| 000           | 0x5B      | 0101 1011 |
+| 001           | 0x4F      | 0100 1111 |
+| 010           | 0x66      | 0110 0110 |
+| 011           | 0x6D      | 0110 1101 |
+| 100           | 0x7D      | 0111 1101 |
+| 101           | 0x47      | 0100 0111 |
+| 110           | 0x7F      | 0111 1111 |
+| 111           | 0x6F      | 0110 1111 |
+
+<br>
+<br>
+<br>
+<br>
+<br>
 ## Código del Programa
 ``` Assembly 
   
@@ -120,10 +159,126 @@ main:
 
 ;--------------------------------------------------------------------------------
 display:
-    rlncf backup,W,0    ;2(backup) -> W
-    call decoder
-    return
+    rlncf backup,W,0    ; 2(backup) -> W
+    call decoder        ; Llama a la función decoder
+    return              ; return
     
 END
 
+```
+
+## Lógica del Programa
+
+Primero le decimos al programa que inicie en la dirección 20h para evitar escribir
+en los vectores de interrupciones.
+Luego le decimos que salte a la etiqueta 'configuracion'
+
+``` Assembly 
+  ORG 0x20            ; Comenzando el programa en la dirección 20h
+  goto configuracion  ; Saltando a la etiqueta llamada configuracion
+```
+
+En la etiqueta 'configuracion' hacemos lo siguiente:
+* Configuramos el puerto A como entrada 
+* Desactivamos el comparador analógico 
+
+``` Assembly 
+configuracion:
+    movlw  b'00000111'  ; o .255 o d'255'en vez de 0xff para binario b'11111111'
+    movwf  TRISA,0      ; Configurando el puerto A como entrada 
+    movlw  0x0F         ; Cargo a W el valor 0Fh
+    movwf  ADCON1,0     ; Muevo 15 al registro ADCON1 (para modificarlo como digital)
+    movlw  0x07         ; Cargo a W el valor 07h
+    movwf  CMCON,0      ; Se desactiva el comparador analogico 
+```
+
+* Configuramos el puerto B como salida
+
+``` Assembly 
+;Configuro la Puerta B como salida
+    movlw  b'00000000'  ; Cargo a W el valor 07h
+    movwf  TRISB,0      ; Se configura el puerto B como entrada
+```
+* Declaramos una variable llamada backup y se inicializa con 0
+
+``` Assembly 
+    backup equ 0x00     ; Declarando una variable llamada backup y poniendola en la direccion 00h
+    clrf backup         ; Seteando 0 a la variable backup
+```
+
+* Luego nuestro programa llega hasta la etiqueta 'main'.
+En ella primero leemos por el puerto A y colocamos el valor en W
+
+``` Assembly 
+main:
+    movf   PORTA,W,0    ; Leemos puerto A PORTA -> W
+```
+
+Luego aplicamos un filtro a W con una operación 'AND', porque sólo nos interesa los tres primeros bits menos significativos
+
+``` Assembly 
+    andlw  b'00000111'  ; filtro
+```
+
+Luego al valor que le acabamos de aplicar el filtro le sumamos dos.
+
+``` Assembly 
+  addlw .2            ; W + 2 -> W
+```
+<br>
+<br>
+Luego el valor que está en W lo guardamos en una variable de respaldo llamado 'backup'
+
+``` Assembly 
+  movwf backup,0      ; W -> backup
+```
+
+LLamamos a la función 'display'
+
+``` Assembly 
+  call display        ; Llamando a la función display
+```
+
+En la función 'display' hacemos lo siguente:
+* Multiplicamos el valor de W por 2, usando una rotación, la razón de esto se debe a que el PC aumenta de dos en dos porque las instrucciones son de 2 Bytes
+* Luego se llama a la función 'decoder'
+
+``` Assembly
+  display:
+    rlncf backup,W,0    ; 2(backup) -> W
+    call decoder        ; Llama a la función decoder
+    return 
+```
+
+En la función 'decoder' hacemos lo siguente:
+* Le sumamos al PCL el valor que se encuetra en W y el resultado lo dejamos en PCL, al realizar esta suma el PC salta a la instruccion correspondiente al número que queremos desplegar.
+* La respresentación del número es por ánodo común, es decir, el valor 0 prende un segmento y el valor 1 apaga un segmento.
+* La instrucción 'retlw' regresa de una función y carga el valor que le indicamos a W.
+
+``` Assembly 
+  decoder:
+  addwf PCL,F,0     ; PCL + W -> PCL
+  retlw b'01111110' ; Representacion del numero 0 (No se usa)
+  retlw b'00110000' ; Representacion del numero 1 (No se usa)
+  retlw 0x5B        ; Representacion del numero 2
+  retlw 0x4F        ; Representacion del Numero 3
+  retlw 0x66        ; Representacion del Numero 4
+  retlw 0x6D        ; Representacion del Numero 5
+  retlw 0x7D        ; Representacion del Numero 6
+  retlw 0x47        ; Representacion del Numero 7
+  retlw 0x7F        ; Representacion del Numero 8
+  retlw 0x6F        ; Representacion del Numero 9
+```
+
+Regresando en la etiqueta 'main', sacamos el valor de W por el puerto B
+
+``` Assembly 
+  movwf LATB,0        ; W -> LATB
+  goto main           ; Ciclando infinitamente el programa
+```
+
+Finalmente hacemos un 'goto main' para ciclar infinítamente el programa y así siempre escuchar por el puerto A.
+
+``` Assembly 
+  goto main           ; Ciclando infinítamente el programa
 ```
